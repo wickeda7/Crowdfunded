@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Crowdfunded</title>
+    </head>
+    <body>
+        <div style="text-align: right; margin: 20px">
+            <button id="connectButton">Connect</button>
+        </div>
+        <div style="margin-left: 20px"><h3>Crowdfunded</h3></div>
+        <div style="margin-left: 20px; margin-top: 10px; display: none" id="divV2">
+            <b>Version 2 top amount pledged: </b> <span id="topamount"></span> at
+            <span id="address"></span>
+        </div>
+        <div style="margin-left: 20px; margin-top: 10px">
+            Campaign End: <span id="enddate"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; <span><b id="enddate2"></b></span>
+        </div>
+        <div style="margin-left: 20px; margin-top: 10px">
+            Pledged Amount: <span id="pledgeamount"></span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp; Goal Amount: <span id="goal"></span>
+        </div>
+        <div style="margin-left: 20px; margin-top: 10px" id="divpledge">
+            <input id="amount" />
+            <button type="button" id="pledgeButton">Approve</button>
+        </div>
+        <!--- <div style="margin-left: 20px; margin-top: 10px" id="divtoken">
+            Get more tokens to pledge
+            <input id="token" placeholder="Amount" />
+            <button type="button" id="addButton">Add</button>
+        </div> -->
+        <div style="margin-left: 20px; margin-top: 10px; display: none" id="divWithdraw">
+            <button type="button" id="withdrawButton">WithDraw</button>
+        </div>
+        <div style="margin-left: 20px; margin-top: 10px; display: none" id="divRefund">
+            <button type="button" id="refundButton">Refund</button>
+        </div>
+    </body>
+    <script src="./index.js" type="module"></script>
+</html>
