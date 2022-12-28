@@ -5,19 +5,18 @@ const { tokenAddress } = require("../frontend/constants/tokenAddress.js")
 const { utils } = require("ethers")
 require("dotenv").config()
 
+const GOAL = process.env.GOAL || "20"
+const END_DATE = process.env.END_DATE || "1672193320"
 async function main() {
     const transparentProxy = await ethers.getContract("CrowdFunded_Proxy")
     const proxyV1 = await ethers.getContractAt("CrowdFunded", transparentProxy.address)
     console.log("Proxy of CrowdFunded deployed to:", proxyV1.address)
-    /// Get token owner for creater
     const accounts = await ethers.getSigners()
-    // console.log(accounts.length)
-    // console.log(accounts)
     /* enddate = new Date().getTime() / 1000  
-    (goal, enddate, tokenAddress, creator) 
+    (goal, enddate, tokenAddress) 
     
     */
-    await proxyV1.store(18, 1672193320, tokenAddress)
+    await proxyV1.store(GOAL, END_DATE, tokenAddress)
     console.log("----------------------------------------------------")
 }
 

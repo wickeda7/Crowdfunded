@@ -6,6 +6,8 @@ const { utils } = require("ethers")
 require("dotenv").config()
 const frontEndLocation = "frontend/constants/"
 const fs = require("fs")
+const GOAL = process.env.GOAL || "20"
+const END_DATE = process.env.END_DATE || "1672193320"
 
 async function main() {
     const creator = process.env.CAMPAIGN_CREATOR
@@ -20,7 +22,7 @@ async function main() {
     (goal, enddate, tokenAddress) 1670709935
     
     */
-    await proxyV2.store(19, 1672193917, tokenAddress)
+    await proxyV2.store(GOAL, END_DATE, tokenAddress)
     console.log("2Proxy of CrowdFundedV2 deployed to:", proxyV2.address)
     if (process.env.UPDATE_FRONT_END) {
         console.log("Writing to front end V2...")
