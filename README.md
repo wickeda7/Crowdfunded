@@ -20,8 +20,8 @@ From your deployed account send the custom token to other accounts to pledge
 Upgradeable contract:
 
 ```
-yarn hardhat deploy scripts/03-deployCampaignV2.js : Added a method to view the top pledge amount
-yarn hardhat run scripts/02-upgradeV2.js : this will add the new Funding goal and end date (optional) and upgrade to V2.
+yarn hardhat run scripts/02-deployCampaignV2.js : Added a method to view the top pledge amount
+yarn hardhat run scripts/03-upgradeV2.js : this will add the new Funding goal and end date (optional) and upgrade to V2.
 
 ```
 

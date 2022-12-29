@@ -8,8 +8,8 @@ require("dotenv").config()
 const GOAL = process.env.GOAL || "20"
 const END_DATE = process.env.END_DATE || "1672193320"
 async function main() {
-    const transparentProxy = await ethers.getContract("CrowdFunded_Proxy")
-    const proxyV1 = await ethers.getContractAt("CrowdFunded", transparentProxy.address)
+    const transparentProxy = await ethers.getContract("FundContract_Proxy")
+    const proxyV1 = await ethers.getContractAt("FundContract", transparentProxy.address)
     console.log("Proxy of CrowdFunded deployed to:", proxyV1.address)
     const accounts = await ethers.getSigners()
     /* enddate = new Date().getTime() / 1000  

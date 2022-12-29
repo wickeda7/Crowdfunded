@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 import "./CrowdFunded.sol";
 
-contract CrowdFundedV2 is CrowdFunded {
+contract FundContractV2 is FundContract {
     function getTopPledger() external view returns (address, uint256) {
         address[] memory funders = s_funders;
         address addr;

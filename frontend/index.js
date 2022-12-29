@@ -154,7 +154,6 @@ async function pledge() {
         const ftoken = new ethers.Contract(tokenAddress, tokenAbi, signer)
 
         try {
-            console.log(pledgeButton.innerHTML)
             if (pledgeButton.innerHTML == "Approve") {
                 const approveTx = await ftoken.approve(
                     contractAddress,
@@ -165,10 +164,8 @@ async function pledge() {
                 pledgeButton.innerHTML = "Pledge"
             }
             if (pledgeButton.innerHTML == "Pledge") {
-                console.log(pledgeButton.innerHTML)
                 const bal = await getContractAllowance()
                 if (bal > 0) {
-                    console.log(bal)
                     const transactionResponse = await contract.pledge(
                         ethers.utils.parseEther(amount.toString())
                     )
@@ -223,8 +220,6 @@ async function getBalance() {
 
         try {
             const balance = await ftoken.balanceOf(account)
-            console.log(campaignEnded)
-            console.log(balance.toString())
             if (!campaignEnded) {
                 if (balance.toString() > 0 && owner != account) {
                     divpledge.style.display = "block"
@@ -287,7 +282,6 @@ async function getContractAllowance() {
 }
 const owner = await getOwner()
 const allowance = await getContractAllowance()
-console.log(allowance)
 if (allowance > 0) {
     pledgeButton.innerHTML = "Pledge"
 }

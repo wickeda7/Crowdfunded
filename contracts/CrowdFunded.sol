@@ -5,7 +5,7 @@ pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FundToken.sol";
-contract CrowdFunded  is Ownable {
+contract FundContract  is Ownable {
 
     // Emitted when the stored value changes
     event ValueChanged(uint goal, uint32 end);
@@ -18,7 +18,7 @@ contract CrowdFunded  is Ownable {
     // Total amount pledged
     uint private s_pledgedAmount;
     
-    FundToken token;
+    FundedToken token;
 
      mapping(address => uint256) public s_addressToAmountFunded;
     address[] public s_funders;
@@ -28,14 +28,13 @@ contract CrowdFunded  is Ownable {
     function store(uint _goal, uint32 _endAt, address _token) public {
         s_goal = _goal;
         s_endAt = _endAt;
-        token = FundToken(_token);
+        token = FundedToken(_token);
          i_owner = token.owner();
-         console.log("i_owner %s", i_owner);
         emit ValueChanged(_goal, _endAt);
     }
 
     function pledge(uint256 _amount) external {
-        //require(block.timestamp <= s_endAt, "ended");
+        require(block.timestamp <= s_endAt, "ended");
         s_addressToAmountFunded[msg.sender] += _amount;
         s_funders.push(msg.sender);
         s_pledgedAmount += _amount;
@@ -71,10 +70,6 @@ contract CrowdFunded  is Ownable {
         token.transfer(msg.sender, _amount);
         
     }
-    // function getContractBalance2() external view returns (uint256) {
-    //     return address(this).balance;
-    // }
-
     function getContractBalance() external view returns (uint256) {
         return token.balanceOf(address(this));
     }

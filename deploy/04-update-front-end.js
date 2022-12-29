@@ -13,13 +13,13 @@ module.exports = async () => {
 }
 
 async function updateAbi() {
-    const fToken = await ethers.getContract("FundToken")
+    const fToken = await ethers.getContract("FundedToken")
     fs.writeFileSync(
         `${frontEndLocation}tokenAbi.json`,
         fToken.interface.format(ethers.utils.FormatTypes.json)
     )
 
-    const crowdFunded = await ethers.getContract("CrowdFunded")
+    const crowdFunded = await ethers.getContract("FundContract")
     fs.writeFileSync(
         `${frontEndLocation}abi.js`,
         `export const abi = ${crowdFunded.interface.format(ethers.utils.FormatTypes.json)}`
@@ -27,7 +27,7 @@ async function updateAbi() {
 }
 
 async function updateContractAddresses() {
-    const fToken = await ethers.getContract("FundToken")
+    const fToken = await ethers.getContract("FundedToken")
     fs.writeFileSync(
         `${frontEndLocation}tokenAddress.js`,
         `module.exports = { tokenAddress:  ${JSON.stringify(fToken.address)}}`
@@ -36,7 +36,7 @@ async function updateContractAddresses() {
         `${frontEndLocation}tokenAddress2.js`,
         `export const tokenAddress = ${JSON.stringify(fToken.address)}`
     )
-    const crowdFunded = await ethers.getContract("CrowdFunded_Proxy")
+    const crowdFunded = await ethers.getContract("FundContract_Proxy")
     fs.writeFileSync(
         `${frontEndLocation}address.js`,
         `export const contractAddress = ${JSON.stringify(crowdFunded.address)}`

@@ -11,23 +11,18 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
     console.log("Deploy FundToken")
-    log("----------------------------------------------------")
+    console.log("----------------------------------------------------")
 
-    const fundToken = await deploy("FundToken", {
+    const fundToken = await deploy("FundedToken", {
         from: deployer,
         args: [],
         log: true,
         waitConfirmations: waitBlockConfirmations,
     })
-    if (fundToken.newlyDeployed) {
-        console.log(`fundToken  deployed at ${fundToken.address}`)
-    }
-    // Be sure to check out the hardhat-deploy examples to use UUPS proxies!
-    // https://github.com/wighawag/template-ethereum-contracts
 
     // Verify the deployment
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
+        console.log("Verifying...")
         await verify(fundToken.address, [])
     }
     log("----------------------------------------------------")

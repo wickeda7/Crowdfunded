@@ -10,10 +10,7 @@ async function main() {
     const waitBlockConfirmations = developmentChains.includes(network.name)
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
-
-    log("----------------------------------------------------")
-
-    const crowdFunded = await deploy("CrowdFundedV2", {
+    const crowdFunded = await deploy("FundContractV2", {
         from: deployer,
         args: [],
         log: true,
@@ -22,12 +19,12 @@ async function main() {
 
     // Verify the deployment
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
+        console.log("Verifying...")
         // const address = (await ethers.getContract("CrowdFunded_Proxy")).address
         await verify(crowdFunded.address, [])
     }
 
-    log("----------------------------------------------------")
+    console.log("----------------------------------------------------")
 }
 
 main()

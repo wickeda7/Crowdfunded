@@ -10,10 +10,10 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         ? 1
         : VERIFICATION_BLOCK_CONFIRMATIONS
 
-    log("----------------------------------------------------")
-    const fundToken = await deployments.get("FundToken")
+    console.log("----------------------------------------------------")
+    const fundToken = await deployments.get("FundedToken")
     if (fundToken.address) {
-        const crowdFunded = await deploy("CrowdFunded", {
+        const crowdFunded = await deploy("FundContract", {
             from: deployer,
             args: [],
             log: true,
@@ -34,11 +34,11 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
 
     // Verify the deployment
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
-        log("Verifying...")
-        const address = (await ethers.getContract("CrowdFunded_Implementation")).address
+        console.log("Verifying...")
+        const address = (await ethers.getContract("FundContract_Implementation")).address
         await verify(address, [])
     }
-    log("----------------------------------------------------")
+    console.log("----------------------------------------------------")
 }
 
 module.exports.tags = ["all", "crowdFunded"]

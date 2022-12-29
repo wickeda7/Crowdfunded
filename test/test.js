@@ -1,7 +1,7 @@
 const { network, deployments, ethers } = require("hardhat")
 const { assert, expect } = require("chai")
 
-describe("CrowdFunded", function () {
+describe("FundContract", function () {
     let deployer, account, erc20, crowdFunded, transparentProxy, proxy, proxyAdmin
     let now = new Date().getTime() / 1000
     let endDate = now + 500 /// around 10 mins
@@ -16,14 +16,14 @@ describe("CrowdFunded", function () {
         const [acc, acc1, acc2, acc3] = await ethers.getSigners()
         deployer = acc
         account = acc1
-        erc20 = await ethers.getContract("FundToken", deployer)
+        erc20 = await ethers.getContract("FundedToken", deployer)
         await deployments.fixture(["all"])
 
-        crowdFunded = await ethers.getContract("CrowdFunded")
-        transparentProxy = await ethers.getContract("CrowdFunded_Proxy")
-        proxy = await ethers.getContractAt("CrowdFunded", transparentProxy.address)
+        crowdFunded = await ethers.getContract("FundContract")
+        transparentProxy = await ethers.getContract("FundContract_Proxy")
+        proxy = await ethers.getContractAt("FundContract", transparentProxy.address)
         await deployments.fixture(["all"])
-        // proxyAdmin = await ethers.getContract("CrowdFundedProxyAdmin")
+        // proxyAdmin = await ethers.getContract("FundContractProxyAdmin")
 
         ////////////////
         await proxy.store(goal, parseInt(endDate), erc20.address)
@@ -37,7 +37,7 @@ describe("CrowdFunded", function () {
         await proxy.pledge(amount)
         ////////////////
     })
-    describe("CrowdFunded methods", function () {
+    describe("FundContract methods", function () {
         it("check store values", async function () {
             await proxy.store(goal, parseInt(endDate), erc20.address)
             const p_goal = await proxy.getGoal()
@@ -60,18 +60,18 @@ describe("CrowdFunded", function () {
         })
     })
 })
-describe("Upgrading CrowdFunded", function () {
+describe("Upgrading FundContract", function () {
     let crowdFunded, transparentProxy, proxyCrowdFunded, crowdFundedProxyAdmin
     beforeEach(async () => {
         await deployments.fixture(["crowdFunded"])
-        crowdFunded = await ethers.getContract("CrowdFunded")
-        transparentProxy = await ethers.getContract("CrowdFunded_Proxy")
-        proxyCrowdFunded = await ethers.getContractAt("CrowdFunded", transparentProxy.address)
+        crowdFunded = await ethers.getContract("FundContract")
+        transparentProxy = await ethers.getContract("FundContract_Proxy")
+        proxyCrowdFunded = await ethers.getContractAt("FundContract", transparentProxy.address)
         crowdFundedProxyAdmin = await ethers.getContract("CrowdFundedProxyAdmin")
     })
     it("can deploy and upgrade a contract", async function () {
         await deployments.fixture(["crowdFundedV2"])
-        const crowdFundedV2 = await ethers.getContract("CrowdFundedV2")
+        const crowdFundedV2 = await ethers.getContract("FundContractV2")
         const upgradeTx = await crowdFundedProxyAdmin.upgrade(
             transparentProxy.address,
             crowdFundedV2.address
