@@ -3,9 +3,10 @@ pragma solidity ^0.8.9;
 
 // Uncomment this line to use console.log
 import "hardhat/console.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "./FundToken.sol";
-contract FundContract  is Ownable {
+
+error NotOwner();
+contract FundContract {
 
     // Emitted when the stored value changes
     event ValueChanged(uint goal, uint32 end);
@@ -24,7 +25,10 @@ contract FundContract  is Ownable {
     address[] public s_funders;
      address public /* immutable */ i_owner;
     
-    
+     modifier onlyOwner {
+        if (msg.sender != i_owner) revert NotOwner();
+        _;
+    }
     function store(uint _goal, uint32 _endAt, address _token) public {
         s_goal = _goal;
         s_endAt = _endAt;
@@ -52,8 +56,7 @@ contract FundContract  is Ownable {
         s_funders = new address[](0);
         token.transfer(msg.sender, _amount);
     }
-    function withdraw(uint256 _amount) external{
-        require(i_owner == msg.sender, "not owner");
+    function withdraw(uint256 _amount) external onlyOwner{
         require(block.timestamp > s_endAt, "not ended");
         require(s_pledgedAmount >= s_goal, "pledged < goal");
         s_pledgedAmount = 0;
